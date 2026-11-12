@@ -1,0 +1,72 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if editar %}Editar cliente{% else %}Registrar cliente{% endif %} | Hotel Paradise
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">
+    {% if editar %}
+        Editar cliente
+    {% else %}
+        Registrar cliente
+    {% endif %}
+</h1>
+
+<p class="text-secondary mb-4">
+    Completa los datos para registrar la información del cliente.
+</p>
+
+<div class="hotel-card">
+
+    <h3 class="mb-4">Información del cliente</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Nombre</label>
+                {{ formulario.nombre }}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Apellidos</label>
+                {{ formulario.apellidos }}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Correo electrónico</label>
+                {{ formulario.correo }}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Teléfono</label>
+                {{ formulario.telefono }}
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <button type="submit" class="btn btn-primary btn-lg">
+            {% if editar %}
+                Guardar cambios
+            {% else %}
+                Registrar cliente
+            {% endif %}
+        </button>
+
+        <a href="{% url 'clientes:lista' %}"
+           class="btn btn-secondary btn-lg">
+            Cancelar
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

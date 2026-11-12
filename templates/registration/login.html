@@ -1,0 +1,66 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center py-5">
+    <div class="card shadow" style="width: 100%; max-width: 450px;">
+
+        <div class="card-header text-center text-white"
+             style="background-color: #172b4d;">
+            <h3 class="mb-0">Hotel Paradise</h3>
+            <small>Inicio de sesión</small>
+        </div>
+
+        <div class="card-body p-4">
+
+            <h5 class="text-center mb-4">
+                Acceso al sistema
+            </h5>
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    El usuario o la contraseña son incorrectos.
+                </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Usuario</label>
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control"
+                        placeholder="Ingresa tu usuario"
+                        required
+                        autofocus
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Ingresa tu contraseña"
+                        required
+                    >
+                </div>
+
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <button type="submit"
+                        class="btn text-white w-100"
+                        style="background-color: #172b4d;">
+                    Iniciar sesión
+                </button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

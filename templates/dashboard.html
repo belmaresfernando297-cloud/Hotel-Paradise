@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Hotel Paradise{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Panel principal</h2>
+
+<p class="text-muted">
+    Bienvenido al sistema de administración de Hotel Paradise.
+    Aquí puedes consultar el estado general del hotel.
+</p>
+
+<div class="row g-4 mt-2">
+
+    <!-- Total de clientes -->
+    <div class="col-md-6 col-xl-4">
+        <div class="hotel-card">
+            <p>Total de clientes</p>
+            <h3>{{ total_clientes }}</h3>
+            <small class="text-muted">Clientes registrados</small>
+        </div>
+    </div>
+
+    <!-- Total de habitaciones -->
+    <div class="col-md-6 col-xl-4">
+        <div class="hotel-card">
+            <p>Total de habitaciones</p>
+            <h3>{{ total_habitaciones }}</h3>
+            <small class="text-muted">Habitaciones registradas</small>
+        </div>
+    </div>
+
+    <!-- Total de reservaciones -->
+    <div class="col-md-6 col-xl-4">
+        <div class="hotel-card">
+            <p>Total de reservaciones</p>
+            <h3>{{ total_reservaciones }}</h3>
+            <small class="text-muted">Reservaciones registradas</small>
+        </div>
+    </div>
+
+    <!-- Habitaciones disponibles -->
+    <div class="col-md-6 col-xl-6">
+        <div class="hotel-card">
+            <p>Habitaciones disponibles</p>
+            <h3>{{ habitaciones_disponibles }}</h3>
+            <small class="text-muted">Disponibilidad registrada</small>
+        </div>
+    </div>
+
+    <!-- Ingresos -->
+    <div class="col-md-6 col-xl-6">
+        <div class="hotel-card">
+            <p>Ingresos generados</p>
+            <h3>${{ ingresos|floatformat:2 }}</h3>
+            <small class="text-muted">
+                Reservaciones activas y finalizadas
+            </small>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Reportes del hotel -->
+<div class="mt-5">
+
+    <h3 class="page-title">Reportes y estadísticas</h3>
+
+    <div class="row g-4">
+
+        <!-- Reservaciones por estado -->
+        <div class="col-md-6">
+            <div class="hotel-card h-100">
+                <h5 class="mb-3">Reservaciones por estado</h5>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Estado</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in reservaciones_por_estado %}
+                        <tr>
+                            <td>{{ registro.estado }}</td>
+                            <td>{{ registro.cantidad }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2">No hay reservaciones registradas.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Habitaciones por tipo -->
+        <div class="col-md-6">
+            <div class="hotel-card h-100">
+                <h5 class="mb-3">Habitaciones por tipo</h5>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Tipo de habitación</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in habitaciones_por_tipo %}
+                        <tr>
+                            <td>{{ registro.tipo }}</td>
+                            <td>{{ registro.cantidad }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2">No hay habitaciones registradas.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Últimas reservaciones -->
+        <div class="col-12">
+            <div class="hotel-card">
+                <h5 class="mb-3">Últimas 5 reservaciones</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Habitación</th>
+                                <th>Entrada</th>
+                                <th>Salida</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reserva in ultimas_reservaciones %}
+                            <tr>
+                                <td>{{ reserva.id }}</td>
+                                <td>{{ reserva.cliente }}</td>
+                                <td>{{ reserva.habitacion.numero }}</td>
+                                <td>{{ reserva.fecha_entrada }}</td>
+                                <td>{{ reserva.fecha_salida }}</td>
+                                <td>${{ reserva.total|floatformat:2 }}</td>
+                                <td>{{ reserva.estado }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7">No hay reservaciones registradas.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,99 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if editar %}
+        Editar reservación
+    {% else %}
+        Registrar reservación
+    {% endif %}
+    | Hotel Paradise
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">
+    {% if editar %}
+        Editar reservación
+    {% else %}
+        Registrar reservación
+    {% endif %}
+</h1>
+
+<p class="text-secondary mb-4">
+    Completa los datos para administrar la reservación.
+</p>
+
+<div class="hotel-card">
+
+    <h3 class="mb-4">Información de la reservación</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% if formulario.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ formulario.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="row">
+
+            <div class="col-md-6 mb-4">
+                <label class="form-label">Cliente</label>
+                {{ formulario.cliente }}
+
+                {% for error in formulario.cliente.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <label class="form-label">Habitación</label>
+                {{ formulario.habitacion }}
+
+                {% for error in formulario.habitacion.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <label class="form-label">Fecha de entrada</label>
+                {{ formulario.fecha_entrada }}
+
+                {% for error in formulario.fecha_entrada.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <label class="form-label">Fecha de salida</label>
+                {{ formulario.fecha_salida }}
+
+                {% for error in formulario.fecha_salida.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <button type="submit" class="btn btn-primary btn-lg">
+            {% if editar %}
+                Guardar cambios
+            {% else %}
+                Registrar reservación
+            {% endif %}
+        </button>
+
+        <a href="{% url 'reservaciones:lista' %}"
+           class="btn btn-secondary btn-lg">
+            Cancelar
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

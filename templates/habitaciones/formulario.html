@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrar habitación | Hotel Paradise{% endblock %}
+
+{% block content %}
+
+<div class="mb-4">
+    {% if editar %}
+        <h2 class="page-title">Editar habitación</h2>
+    {% else %}
+        <h2 class="page-title">Registrar habitación</h2>
+    {% endif %} 
+
+    <p class="text-muted">
+        Completa los datos para agregar una nueva habitación.
+    </p>
+</div>
+
+<div class="hotel-card">
+
+    {% if editar %}
+        <h4 class="mb-4">Modificar información de la habitación</h4>
+    {% else %}
+        <h4 class="mb-4">Información de la habitación</h4>
+    {% endif %} 
+
+    <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {% if formulario.errors %}
+            <div class="alert alert-danger">
+                Revisa los campos. Algunos datos son incorrectos.
+                {{ formulario.errors }}
+            </div>
+        {% endif %}
+
+        <div class="row g-3">
+
+            <div class="col-md-6">
+                <label class="form-label">Número de habitación</label>
+                {{ formulario.numero }}
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Tipo de habitación</label>
+                {{ formulario.tipo }}
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Precio por noche</label>
+                {{ formulario.precio_noche }}
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Capacidad de personas</label>
+                {{ formulario.capacidad }}
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Imagen de habitación</label>
+                {{ formulario.imagen }}
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-check">
+                    {{ formulario.disponible }}
+                    <label class="form-check-label">
+                        Habitación disponible
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <div class="d-flex gap-2">
+
+            <button type="submit" class="btn btn-primary">
+                {% if editar %}
+                    Guardar cambios
+                {% else %}
+                    Guardar habitación
+                {% endif %}
+            </button>
+
+            <a href="{% url 'habitaciones:lista' %}"
+               class="btn btn-secondary">
+                Cancelar
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

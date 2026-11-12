@@ -1,0 +1,105 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Clientes | Hotel Paradise{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="page-title">Clientes</h1>
+        <p class="text-secondary">
+            Administración de clientes del hotel.
+        </p>
+    </div>
+
+    <a href="{% url 'clientes:registrar' %}"
+       class="btn btn-primary btn-lg">
+        + Registrar cliente
+    </a>
+</div>
+
+<div class="hotel-card">
+
+    <h3 class="mb-4">Listado de clientes</h3>
+
+        <form method="GET" class="mb-3">
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="buscar"
+                    class="form-control"
+                    placeholder="Buscar por nombre, apellidos o correo..."
+                    value="{{ busqueda }}"
+                >
+                <button type="submit" class="btn btn-primary">
+                    Buscar
+                </button>
+                <a href="{% url 'clientes:lista' %}" class="btn btn-secondary">
+                    Limpiar
+                </a>
+            </div>
+        </form>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Correo electrónico</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.nombre }}</td>
+                    <td>{{ cliente.apellidos }}</td>
+                    <td>{{ cliente.correo }}</td>
+                    <td>{{ cliente.telefono }}</td>
+
+                    <td>
+                        <a href="{% url 'clientes:editar' cliente.id %}"
+                           class="btn btn-warning btn-sm">
+                            Editar
+                        </a>
+
+                        <form method="POST"
+                              action="{% url 'clientes:eliminar' cliente.id %}"
+                              style="display:inline;">
+
+                            {% csrf_token %}
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Estás seguro de eliminar este cliente?');">
+                                Eliminar
+                            </button>
+
+                        </form>
+                    </td>
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center text-secondary py-4">
+                        No hay clientes registrados.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+    <p class="text-secondary mb-0">
+        Total de clientes: {{ total_clientes }}
+    </p>
+
+</div>
+
+{% endblock %}
