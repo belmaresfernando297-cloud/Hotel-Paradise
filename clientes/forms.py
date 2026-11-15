@@ -32,3 +32,9 @@ class ClienteForm(forms.ModelForm):
                 attrs={'class': 'form-control'}
             ),
         }
+
+        error_messages = {
+            'correo': {
+                'unique': 'Ya existe un cliente registrado con este correo electrónico.',
+            }
+        }

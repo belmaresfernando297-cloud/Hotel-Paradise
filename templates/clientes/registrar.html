@@ -26,26 +26,44 @@
     <form method="POST">
         {% csrf_token %}
 
+        {% if formulario.errors %}
+            <div class="alert alert-danger mb-4">
+                <strong>Error en el formulario:</strong> Por favor verifica los datos ingresados.
+            </div>
+        {% endif %}
+
         <div class="row">
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Nombre</label>
                 {{ formulario.nombre }}
+                {% for error in formulario.nombre.errors %}
+                    <div class="text-danger small mt-1 font-weight-bold">{{ error }}</div>
+                {% endfor %}
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Apellidos</label>
                 {{ formulario.apellidos }}
+                {% for error in formulario.apellidos.errors %}
+                    <div class="text-danger small mt-1 font-weight-bold">{{ error }}</div>
+                {% endfor %}
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Correo electrónico</label>
                 {{ formulario.correo }}
+                {% for error in formulario.correo.errors %}
+                    <div class="text-danger small mt-1 font-weight-bold">{{ error }}</div>
+                {% endfor %}
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Teléfono</label>
                 {{ formulario.telefono }}
+                {% for error in formulario.telefono.errors %}
+                    <div class="text-danger small mt-1 font-weight-bold">{{ error }}</div>
+                {% endfor %}
             </div>
 
         </div>

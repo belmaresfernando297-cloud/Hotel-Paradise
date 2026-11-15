@@ -27,15 +27,6 @@ def lista(request):
 
     return render(request, 'clientes/lista.html', contexto)
 
-    clientes = Cliente.objects.all()
-
-    contexto = {
-        'clientes': clientes,
-        'total_clientes': clientes.count(),
-    }
-
-    return render(request, 'clientes/lista.html', contexto)
-
 @login_required
 def registrar(request):
     if request.method == 'POST':

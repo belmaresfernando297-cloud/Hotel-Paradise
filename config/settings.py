@@ -14,6 +14,12 @@ from pathlib import Path
 import os
 from django.core.exceptions import ImproperlyConfigured
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,17 +27,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-hotel-paradise-dev-key-fallback')
 
-if not SECRET_KEY:
-    raise ImproperlyConfigured(
-        'La variable de entorno DJANGO_SECRET_KEY no está configurada.'
-    )
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -114,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-mx'
 
 TIME_ZONE = 'UTC'
 
@@ -145,3 +147,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 LOGIN_URL = '/cuentas/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/cuentas/login/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
